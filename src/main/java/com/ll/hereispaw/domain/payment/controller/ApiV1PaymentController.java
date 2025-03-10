@@ -2,6 +2,7 @@ package com.ll.hereispaw.domain.payment.controller;
 
 import com.ll.hereispaw.domain.member.dto.MemberDto;
 import com.ll.hereispaw.domain.payment.dto.PaymentRequest;
+import com.ll.hereispaw.domain.payment.dto.RewardRequest;
 import com.ll.hereispaw.domain.payment.service.PaymentService;
 import com.ll.hereispaw.global.error.ErrorCode;
 import com.ll.hereispaw.global.globalDto.GlobalResponse;
@@ -145,5 +146,15 @@ public class ApiV1PaymentController {
         } catch (Exception e) {
             return GlobalResponse.error(ErrorCode.INTERNAL_SERVER_ERROR);
         }
+    }
+
+    @PostMapping("/reward")
+    public GlobalResponse<String> rewardPoints(
+        @LoginUser MemberDto loginUser,
+        @RequestBody RewardRequest request){
+
+        paymentService.rewardPoints(loginUser, request);
+
+        return GlobalResponse.success("사례금 전달 완료");
     }
 }

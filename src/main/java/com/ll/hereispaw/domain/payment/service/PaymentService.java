@@ -1,10 +1,12 @@
 package com.ll.hereispaw.domain.payment.service;
 
 import com.ll.hereispaw.domain.member.dto.MemberDto;
+import com.ll.hereispaw.domain.payment.dto.RewardRequest;
 import com.ll.hereispaw.domain.payment.entity.Payment;
 import com.ll.hereispaw.domain.payment.repository.PaymentRepository;
 import com.ll.hereispaw.global.error.ErrorCode;
 import com.ll.hereispaw.global.exception.CustomException;
+import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import org.json.simple.JSONObject;
 import org.springframework.stereotype.Service;
@@ -59,5 +61,28 @@ public class PaymentService {
     // 회원의 총 포인트 조회
     public Integer getPointsByMemberId(Long memberId) {
         return paymentRepository.getTotalPointsByMemberId(memberId);
+    }
+
+    public void rewardPoints(MemberDto loginUser, RewardRequest request) {
+        Long senderId = loginUser.getId();
+        Long receiverId = request.getRewardUserId();
+        Integer rewardAmount = request.getRewardAmount();
+
+        String reward_key = "paw"+String.format("%d_%d",senderId,receiverId)
+            +UUID.randomUUID().toString().substring(0,8);
+
+        Payment senderPayment = Payment.builder()
+            .memberId(senderId)
+            .amount(-rewardAmount)
+            .paymentKey(reward_key)
+            .build();
+        paymentRepository.save(senderPayment);
+
+        Payment receiverPayment = Payment.builder()
+            .memberId(receiverId)
+            .amount(rewardAmount)
+            .paymentKey(reward_key)
+            .build();
+        paymentRepository.save(receiverPayment);
     }
 }

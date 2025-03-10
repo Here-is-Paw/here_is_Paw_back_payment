@@ -27,4 +27,6 @@ public class Payment extends BaseEntity {
 
     @Column(unique = true)
     private String paymentKey;      // 결제 고유 키
+
+
 }

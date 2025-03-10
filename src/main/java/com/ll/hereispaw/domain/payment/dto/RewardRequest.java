@@ -1,17 +1,17 @@
 package com.ll.hereispaw.domain.payment.dto;
 
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Getter
 @Setter
+@Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class PaymentRequest {
-    // 결제 승인 시 필요한 데이터
-    private String orderId;
-    private Integer amount;
-    private String paymentKey;
+public class RewardRequest {
+
+  private Long rewardUserId;
+  private Integer rewardAmount;
 }
