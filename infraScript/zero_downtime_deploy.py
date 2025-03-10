@@ -9,12 +9,12 @@ from typing import Dict, Optional
 
 class ServiceManager:
     # 초기화 함수
-    def __init__(self, socat_port: int = 8099, sleep_duration: int = 3) -> None:
+    def __init__(self, socat_port: int = 8100, sleep_duration: int = 3) -> None:
         self.socat_port: int = socat_port
         self.sleep_duration: int = sleep_duration
         self.services: Dict[str, int] = {
-            'here_is_paw_payment_1': 8100,
-            'here_is_paw_payment_2': 8101
+            'here_is_paw_payment_1': 8101,
+            'here_is_paw_payment_2': 8102
         }
         self.current_name: Optional[str] = None
         self.current_port: Optional[int] = None
