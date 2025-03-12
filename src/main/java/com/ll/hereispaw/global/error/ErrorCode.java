@@ -18,12 +18,6 @@ public enum ErrorCode {
     DATABASE_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, "데이터베이스 오류가 발생했습니다."),
     INTERNAL_SERVER_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, "서버 내부 오류가 발생했습니다."),
 
-    // Token
-    INVALID_TOKEN(HttpStatus.BAD_REQUEST, "유효하지 않은 토큰입니다."),
-    ACCESS_TOKEN_EXPIRED(HttpStatus.UNAUTHORIZED, "액세스 토큰이 만료되었습니다."),
-    REFRESH_TOKEN_EXPIRED(HttpStatus.UNAUTHORIZED, "리프레시 토큰이 만료되었습니다."),
-
-
     // User
     NOT_FOUND_USER(HttpStatus.BAD_REQUEST, "해당 유저가 존재하지 않습니다"),
     PASSWORD_MISMATCH(HttpStatus.BAD_REQUEST, "비밀번호가 일치하지 않습니다."),
@@ -36,22 +30,13 @@ public enum ErrorCode {
 
     TOKEN_EXPIRED(HttpStatus.BAD_REQUEST, "토큰이 만료되었습니다."),
 
-    // post
-    POST_NOT_FOUND(HttpStatus.NOT_FOUND, "게시글을 찾을 수 없습니다."),
-
-    // myPet
-    MY_PET_NOT_FOUND(HttpStatus.NOT_FOUND, "해당하는 반려견을 찾을 수 없습니다."),
-
-    //S3
-    S3_UPLOAD_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, "S3 업로드 중 오류가 발생했습니다."),
-  
-    // missing
-    MISSING_NOT_FOUND(HttpStatus.NOT_FOUND, "신고글을 찾을 수 없습니다."),
-
     // payment
     PAYMENT_FAILED(HttpStatus.BAD_REQUEST, "결제 처리에 실패했습니다."),
     DUPLICATE_PAYMENT(HttpStatus.BAD_REQUEST, "중복된 결제 요청입니다."),
-    PAYMENT_SAVE_FAILED(HttpStatus.INTERNAL_SERVER_ERROR, "결제 정보 저장에 실패했습니다.");
+    PAYMENT_SAVE_FAILED(HttpStatus.INTERNAL_SERVER_ERROR, "결제 정보 저장에 실패했습니다."),
+    INSUFFICIENT_POINTS(HttpStatus.PAYMENT_REQUIRED, "결제 금액이 부족합니다.");
+
+
 
     private final HttpStatus httpStatus;
     private final String message;

@@ -63,25 +63,32 @@ public class PaymentService {
         return paymentRepository.getTotalPointsByMemberId(memberId);
     }
 
+    @Transactional
     public void rewardPoints(MemberDto loginUser, RewardRequest request) {
         Long senderId = loginUser.getId();
         Long receiverId = request.getRewardUserId();
         Integer rewardAmount = request.getRewardAmount();
 
+        int totalAmount = paymentRepository.getTotalPointsByMemberId(senderId);
+
+        if (rewardAmount > totalAmount) {
+            throw new CustomException(ErrorCode.INSUFFICIENT_POINTS);
+        }
+
         String reward_key = "paw"+String.format("%d_%d",senderId,receiverId)
-            +UUID.randomUUID().toString().substring(0,8);
+            +UUID.randomUUID();
 
         Payment senderPayment = Payment.builder()
             .memberId(senderId)
             .amount(-rewardAmount)
-            .paymentKey(reward_key)
+            .paymentKey(reward_key + "Sender")
             .build();
         paymentRepository.save(senderPayment);
 
         Payment receiverPayment = Payment.builder()
             .memberId(receiverId)
             .amount(rewardAmount)
-            .paymentKey(reward_key)
+            .paymentKey(reward_key + "Receiver")
             .build();
         paymentRepository.save(receiverPayment);
     }
