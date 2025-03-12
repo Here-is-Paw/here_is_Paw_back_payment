@@ -2,33 +2,22 @@ server:
   port: 8100
 spring:
   jpa:
-    database-platform: org.hibernate.spatial.dialect.postgis.PostgisPG10Dialect
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
     hibernate:
-      ddl-auto: create
+      ddl-auto: update
     show-sql: true
     properties:
       hibernate:
         format_sql: true
-    open-in-view: false # OSIV 설정 끄기
 
 management:
   endpoints:
     web:
       exposure:
         include: health  # 이 부분 추가
-custom:
-  prod:
-    cookieDomain: pawpaw.kknaks.site
-    frontUrl: "https://www.${custom.prod.cookieDomain}"
-    backUrl: "https://api.${custom.prod.cookieDomain}"
-  site:
-    name: "pawpaw"
-    cookieDomain: "${custom.prod.cookieDomain}"
-    frontUrl: "${custom.prod.frontUrl}"
-    backUrl: "${custom.prod.backUrl}"
 services:
   auth:
-    url: http://110.165.16.61:8090  # 인증 서비스 URL
+    url: http://110.165.16.61:8090 # 인증 서비스 URL
   post:
     url: http://110.165.16.61:8093  # 게시글 서비스 URL
   chat:
@@ -36,4 +25,8 @@ services:
   noti:
     url: http://110.165.16.61:8097  # 알림 서비스 URL
   payment:
-    url: http://110.165.16.61:8099 # 결제 서비스 URL
+    url: http://110.165.16.61:8100 # 결제 서비스 URL
+  search:
+    url: http://110.165.16.61:8103  # 검색 서비스 URL
+  carecenter:
+    url: http://110.165.16.61:8105 # 병원 서비스 URL
